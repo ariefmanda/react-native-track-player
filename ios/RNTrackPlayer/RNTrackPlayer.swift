@@ -185,17 +185,20 @@ public class RNTrackPlayer: RCTEventEmitter {
         player.event.playbackEnd.addListener(self) { [weak self] reason in
             guard let `self` = self else { return }
 
-            if reason == .playedUntilEnd && self.player.nextItems.count == 0 {
-                self.sendEvent(withName: "playback-queue-ended", body: [
-                    "track": (self.player.currentItem as? Track)?.id,
-                    "position": self.player.currentTime,
-                    ])
-            } else if reason == .playedUntilEnd {
+            if reason == .playedUntilEnd {
+                
                self.sendEvent(withName: "playback-track-changed", body: [
                     "track": (self.player.currentItem as? Track)?.id,
                     "position": self.player.currentTime,
                     "nextTrack": (self.player.nextItems.first as? Track)?.id,
+                ])
+                
+                if self.player.nextItems.count == 0 {
+                    self.sendEvent(withName: "playback-queue-ended", body: [
+                        "track": (self.player.currentItem as? Track)?.id,
+                        "position": self.player.currentTime,
                     ])
+                }
             }
         }
         
