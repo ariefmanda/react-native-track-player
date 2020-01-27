@@ -151,6 +151,13 @@ declare namespace RNTrackPlayer {
   export function getBufferedPosition(): Promise<number>;
   export function getState(): Promise<State>;
   export function getRate(): Promise<number>;
+  export function getRate(): Promise<number>;
+
+  // Hook
+
+  export function usePlaybackState(): void;
+  export function useTrackPlayerEvents(): void;
+  export function useTrackPlayerProgress(): void;
 
   // Components
 
